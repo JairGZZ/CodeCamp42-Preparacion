@@ -1,0 +1,29 @@
+Estaba practicando JavaScript y me encontré con un comportamiento curioso al intentar pasar 
+una función como argumento de otra función, como en el caso de setTimeout. 
+Quería que se ejecutara una alerta después de un tiempo, 
+así que probé pasar alert('hola después de 1 segundo') directamente como argumento de setTimeout, 
+como en este ejemplo:
+
+setTimeout(alert('hola después de 1 segundo'), 5000);
+
+
+Lo que no sabía era que, al hacerlo, no estaba pasando la referencia a la función alert, 
+sino que la ejecutaba inmediatamente. Es decir, alert se mostró de inmediato, 
+y lo que realmente pasaba como argumento a setTimeout era el resultado de la ejecución de alert, 
+que es undefined.
+
+Para que la alerta se ejecutara después del tiempo correcto, 
+tuve que pasar la referencia a la función, como en este otro ejemplo:
+
+setTimeout(alert, 5000);
+
+
+O también podría usar una función anónima, como:
+
+setTimeout(() => alert('hola después de 1 segundo'), 5000);
+
+
+Ahora entiendo que la diferencia es que setTimeout necesita una 
+función para ejecutar después del tiempo especificado, no el resultado de la ejecución inmediata de esa función. 
+Este concepto no solo se aplica a setTimeout, 
+sino a cualquier situación en la que queramos pasar una función como argumento a otra función en JavaScript.
