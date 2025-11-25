@@ -1,21 +1,21 @@
+//definimos la url base de la api
+const urlBase = "https://jsonplaceholder.typicode.com/todos";
 
-const urlBase = "https://jsonplaceholder.typicode.com/todos/";
-
-
+//funcion para obtener todos los datos
 async function GetAllData() {
-
   try {
-    let response = await fetch(urlBase)
-    let data = await response.json()
+    //hacemos fetch a la url base
+    let response = await fetch(urlBase);
+    let data = await response.json();
 
     return data;
-    
   } catch (error) {
-    throw new Error("Ocurrio un error al obtener los datos",error)
-    
+    throw new Error("Ocurrio un error al obtener los datos " + error.message);
   }
 }
-function changeBodyColor(){
+
+//funcion para cambiar el color del body
+function changeBodyColor() {
   const body = document.getElementById("body");
   body.style.backgroundColor = "gray";
 }
@@ -24,49 +24,35 @@ function cambiarTexto() {
   const titulo = document.getElementById("titulo");
   titulo.textContent = "¡Texto cambiado desde JS!";
   titulo.style.color = "blue";
-  titulo.style.backgroundColor = "red"
+  titulo.style.backgroundColor = "red";
 }
+//funcion para cargar los datos y mostrarlos en tarjetas
 async function loadData() {
-  
+  const data = await GetAllData();
 
-  const data = await GetAllData()
+  const container = document.getElementById("container");
 
-
-       const container = document.getElementById("container")
-
+  //iteramos sobre los datos y creamos tarjetas para cada uno
   for (const element of data) {
-        const p = document.createElement("p")
-                const p1 = document.createElement("p")
-        const p2 = document.createElement("p")
-        const p3 = document.createElement("p")
+    const card = document.createElement("div");
+    card.classList.add("todo-card");
 
-        p.textContent = element.title
-        p1.textContent= element.id
-    p2.textContent= element.userId
-    p3.textContent= element.completed
+    //cambiamos a innerhtml para no estar creando manualmente con createlement
+    card.innerHTML = ` 
+  <p><strong>ID:</strong> ${element.id}</p>
+  <p><strong>User:</strong> ${element.userId}</p>
+  <p><strong>Título:</strong> ${element.title}</p>
+  <p><strong>Completado:</strong> ${element.completed}</p>
+`;
 
-
-
-  container.appendChild(p)
-    container.appendChild(p1)
-  container.appendChild(p2)
-  container.appendChild(p3)
-
-
-  /*   container.appendChild(p.textContent = element.title)
-  container.appendChild(p.textContent = element.userId)
-  container.appendChild(p.textContent = element.completed) */
-
-
+    //agregamos la tarjeta al contenedor
+    container.appendChild(card);
   }
 }
- 
 
-
-
-async function Main(){
-  
-  await loadData()
+//aqui centralizamos la llamada de los metoodos
+async function Main() {
+  await loadData();
   changeBodyColor();
   cambiarTexto();
 }
