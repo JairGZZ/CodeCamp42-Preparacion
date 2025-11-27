@@ -1,0 +1,32 @@
+Sistema de Reservas de Hotel
+
+Una cadena de hoteles necesita un sistema para gestionar las reservas de habitaciones.
+
+Sistema de Reservas de Hotel
+Una cadena de hoteles necesita un sistema para gestionar las reservas de habitaciones.
+1. Hotel
+Tiene un nombre, dirección y categoría.
+Cada hotel tiene varias habitaciones.
+2. Habitación
+Tiene un número, un tipo (simple, doble, suite) y un precio por noche.
+Cada habitación pertenece exactamente a un hotel.
+Una habitación puede tener muchas reservas a lo largo del año.
+3. Reserva
+Tiene una fecha de inicio, fecha de fin y un estado (Confirmada, Pendiente, Cancelada).
+Una reserva solo puede estar asociada a una sola habitación.
+Una habitación puede tener 0 o muchas reservas.
+4. Huesped
+Tiene nombre y documento.
+Un huésped puede hacer muchas reservas.
+Una reserva pertenece a un solo huésped.
+5. Pago
+Cada reserva puede tener 0 o 1 pago (por si todavía no paga).
+El pago tiene un monto y un método (tarjeta, efectivo).
+Un pago pertenece únicamente a una reserva.
+objetivos:
+Identificar las clases con atributos y métodos.
+Decidir qué relaciones son:
+Asociación normal
+Composición
+Agregación
+Determinar la multiplicidad correcta en cada extremo.
