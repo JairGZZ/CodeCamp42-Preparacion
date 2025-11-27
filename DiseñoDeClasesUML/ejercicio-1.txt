@@ -1,0 +1,36 @@
+
+Una librería online quiere manejar la venta de libros. El sistema debe permitir:
+
+1. Gestión de Libros
+
+Cada libro tiene: título, autor, precio, ISBN, categoría.
+
+Un libro puede tener varios autores, pero al menos uno.
+
+2. Clientes
+
+Un cliente tiene nombre, email y una lista de pedidos que ha realizado.
+
+Un cliente puede realizar muchos pedidos, pero un pedido pertenece solo a un cliente.
+
+3. Pedidos
+
+Un pedido tiene fecha, estado (Pendiente, Pagado, Enviado), y una lista de items.
+
+Cada pedido debe tener al menos un item.
+
+
+4. Items del Pedido
+
+Cada item está compuesto por un libro y una cantidad.
+
+Un mismo libro puede aparecer en muchos pedidos distintos.
+
+
+5. Pagos
+
+Un pedido puede tener solo un pago.
+
+El pago tiene: monto, fecha, método de pago (Tarjeta, Yape/Plin, Efectivo), código de operación.
+
+
