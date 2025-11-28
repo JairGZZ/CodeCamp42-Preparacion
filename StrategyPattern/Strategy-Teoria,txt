@@ -1,0 +1,255 @@
+Teoría detallada del patrón Strategy
+
+El patrón Strategy (Patrón Estrategia) es un patrón de diseño de comportamiento que permite definir una familia de algoritmos, encapsular cada uno de ellos y hacerlos intercambiables. El patrón Strategy permite que el algoritmo varíe independientemente de los clientes que lo usan.
+
+1. Intención (propósito)
+
+Separar el comportamiento (algoritmo) del contexto que lo usa.
+
+Permitir cambiar el algoritmo en tiempo de ejecución sin modificar el cliente.
+
+Evitar grandes sentencias condicionales (if/switch) que seleccionan el algoritmo.
+
+2. Problema que resuelve (motivación)
+
+Cuando una clase tiene varias variantes de un comportamiento (por ejemplo, diferentes formas de ordenamiento, cálculo de impuestos, envío de notificaciones), el código del cliente suele contener lógica que elige entre esas variantes. Esto provoca código difícil de mantener, viola el principio de responsabilidad única y el principio abierto/cerrado (OCP). Strategy separa esas variantes en clases distintas y hace la selección intercambiable.
+
+3. Estructura y participantes
+Roles principales
+
+Context: clase que usa una Strategy. Mantiene una referencia a un objeto Strategy y la llama cuando necesita ejecutar el comportamiento. No implementa el algoritmo por sí misma.
+
+Strategy (interfaz/abstracción): define la interfaz común para todas las variantes del algoritmo.
+
+ConcreteStrategy: implementaciones concretas de la Strategy (cada algoritmo en su propia clase).
+
+Relación
+
+Context tiene (composition/aggregation) una referencia a Strategy.
+
+ConcreteStrategy implementa Strategy.
+
+4. Diagrama UML (descripción)
++----------------+         uses           +------------------+
+|    Context     |----------------------->|    Strategy      |
+| - strategy: S  |                        | + execute(): R   |
+| + setStrategy()|                        +------------------+
+| + doWork()     |                               /_\
++----------------+                                |
+                                                  |
+                                  +---------------+---------------+
+                                  |               |               |
+                        +---------------+  +---------------+  +---------------+
+                        |ConcreteStratA |  |ConcreteStratB |  |ConcreteStratC |
+                        |+ execute()    |  |+ execute()    |  |+ execute()    |
+                        +---------------+  +---------------+  +---------------+
+
+5. Ventajas
+
+Fomenta cohesión: cada algoritmo en su propia clase.
+
+Facilita la extensión y el cumplimiento del OCP: añadir un algoritmo nuevo sin cambiar código existente.
+
+Reutilización de estrategias en distintos contextos.
+
+Permite composición y/o configuración en tiempo de ejecución (runtime).
+
+6. Inconvenientes / contras
+
+Aumenta el número de clases (más clases pequeñas).
+
+El cliente o el contexto debe conocer o recibir la estrategia adecuada (gestión/configuración).
+
+Si existe mucho acoplamiento entre el algoritmo y el estado interno del contexto, extraer el algoritmo puede ser costoso.
+
+7. Cuándo usarlo (heurística)
+
+Cuando hay varias variantes de un algoritmo que deben ser intercambiables.
+
+Cuando quieres evitar condicionales que seleccionan el comportamiento.
+
+Cuando los algoritmos pueden cambiar en tiempo de ejecución.
+
+Cuando necesitas aislar el uso de un algoritmo para facilitar pruebas unitarias.
+
+8. Relación con otros patrones
+
+State: similar en estructura (ambos usan composición y objetos que implementan la misma interfaz), pero la intención difiere: State modela cambios de comportamiento según estado interno del objeto; Strategy modela varias maneras de realizar una operación elegidas explícitamente. En State el objeto cambia su propia estrategia internamente; en Strategy el cliente/context decide la estrategia.
+
+Template Method: Template define el esqueleto de un algoritmo en una superclase y deja pasos a subclases; Strategy encapsula variantes completas como objetos independientes.
+
+Command: Command encapsula una petición como objeto (a menudo con ejecución diferida y undo), Strategy encapsula algoritmos para usarlos de forma intercambiable.
+
+9. Implementación: ejemplos prácticos
+Ejemplo en Java (clásico)
+// Strategy
+public interface PaymentStrategy {
+    void pay(double amount);
+}
+
+// ConcreteStrategy 1
+public class CreditCardPayment implements PaymentStrategy {
+    private String cardNumber;
+    public CreditCardPayment(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+    @Override
+    public void pay(double amount) {
+        System.out.println("Pagando " + amount + " con tarjeta " + cardNumber);
+    }
+}
+
+// ConcreteStrategy 2
+public class PaypalPayment implements PaymentStrategy {
+    private String email;
+    public PaypalPayment(String email) { this.email = email; }
+    @Override
+    public void pay(double amount) {
+        System.out.println("Pagando " + amount + " con PayPal (" + email + ")");
+    }
+}
+
+// Context
+public class Checkout {
+    private PaymentStrategy paymentStrategy;
+    public Checkout(PaymentStrategy strategy) {
+        this.paymentStrategy = strategy;
+    }
+    public void setPaymentStrategy(PaymentStrategy strategy) {
+        this.paymentStrategy = strategy;
+    }
+    public void payOrder(double amount) {
+        paymentStrategy.pay(amount);
+    }
+}
+
+// Uso
+public class Main {
+    public static void main(String[] args) {
+        Checkout checkout = new Checkout(new CreditCardPayment("1234-5678"));
+        checkout.payOrder(100.0);
+
+        // cambiar estrategia en tiempo de ejecución
+        checkout.setPaymentStrategy(new PaypalPayment("user@example.com"));
+        checkout.payOrder(50.0);
+    }
+}
+
+Ejemplo en C# (.NET) con inyección de dependencias (estilo moderno)
+public interface ICompressionStrategy
+{
+    void Compress(string sourceFile);
+}
+
+public class ZipCompression : ICompressionStrategy
+{
+    public void Compress(string sourceFile) => Console.WriteLine($"Comprimiendo {sourceFile} como ZIP");
+}
+
+public class RarCompression : ICompressionStrategy
+{
+    public void Compress(string sourceFile) => Console.WriteLine($"Comprimiendo {sourceFile} como RAR");
+}
+
+public class Compressor
+{
+    private ICompressionStrategy _strategy;
+    public Compressor(ICompressionStrategy strategy) => _strategy = strategy;
+    public void SetStrategy(ICompressionStrategy strategy) => _strategy = strategy;
+    public void CompressFile(string file) => _strategy.Compress(file);
+}
+
+// Uso
+var compressor = new Compressor(new ZipCompression());
+compressor.CompressFile("video.mp4");  // usa ZIP
+compressor.SetStrategy(new RarCompression());
+compressor.CompressFile("video.mp4");  // ahora usa RAR
+
+Ejemplo compacto con funciones/lambdas (Python / Java 8+)
+
+En lenguajes con funciones de primera clase, las estrategias pueden ser funciones.
+
+Python:
+
+def strategy_a(x): return x * 2
+def strategy_b(x): return x + 100
+
+class Context:
+    def __init__(self, strategy):
+        self.strategy = strategy
+    def execute(self, value):
+        return self.strategy(value)
+
+c = Context(strategy_a)
+print(c.execute(5))  # 10
+c.strategy = strategy_b
+print(c.execute(5))  # 105
+
+
+Java (con interfaces funcionales y lambdas):
+
+@FunctionalInterface
+public interface SortStrategy {
+    void sort(int[] arr);
+}
+
+SortStrategy quicksort = arr -> { /* implementación */ };
+SortStrategy bubblesort = arr -> { /* implementación */ };
+
+Context ctx = new Context(quicksort);
+ctx.executeSort(array);
+ctx.setStrategy(bubblesort);
+ctx.executeSort(array);
+
+10. Buenas prácticas y variantes
+
+Inyección de dependencia: pasar la Strategy al constructor o a través de un setter facilita pruebas y configuración.
+
+Factories: usar una fábrica para crear la estrategia apropiada según configuración o contexto.
+
+Composición: si un algoritmo tiene pasos comunes, puedes componer estrategias internas o reutilizar partes.
+
+Estrategias parametrizadas: en lugar de crear muchas clases casi idénticas, crear estrategias configurables (una clase con parámetros).
+
+Caching: si la selección de estrategia es costosa, guardar la estrategia seleccionada.
+
+11. Pruebas unitarias
+
+Probar cada ConcreteStrategy de forma aislada (mocks si dependen de recursos externos).
+
+Probar Context con estrategias mock para validar que delega correctamente.
+
+Validar comportamiento al cambiar estrategias en tiempo de ejecución.
+
+12. Ejemplos reales / casos de uso
+
+Algoritmos de ordenamiento (distintas implementaciones).
+
+Cálculo de impuestos o tarifas por país/estado.
+
+Métodos de pago (tarjeta, PayPal, criptomoneda).
+
+Serialización (JSON, XML, binario).
+
+Estrategias de enrutamiento o balanceo de carga.
+
+Algoritmos de compresión o cifrado.
+
+13. Errores comunes y antipatrónes
+
+Estrategias demasiado acopladas al contexto: si la estrategia necesita mucho del estado interno del contexto, puede violar el encapsulamiento. Solución: pasar el estado necesario como parámetros.
+
+Uso innecesario: aplicar Strategy para un caso simple con solo dos variantes podría añadir complejidad innecesaria.
+
+Multiplicar clases cuando con una estrategia configurable sería suficiente.
+
+14. Checklist rápido antes de aplicar Strategy
+
+¿Hay más de una forma clara de hacer una operación?
+
+¿Necesitan estas formas cambiar en tiempo de ejecución?
+
+¿Quieres evitar condicionales que seleccionan comportamiento?
+
+¿Puedes aislar el algoritmo y exponer una interfaz clara?
+Si la mayoría es "sí", Strategy es una buena opción.
