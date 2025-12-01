@@ -12,11 +12,13 @@ builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Agre
+//Agregar notifiers al contenedor de inyeccion de dependencias
 builder.Services.AddSingleton<EmailNotifier>();
 builder.Services.AddSingleton<PushNotifier>();
-builder.Services.AddSingleton<WhattsapNotifier>();
 builder.Services.AddSingleton<NotificationService>();
+
+//Agregar HttpClient para WhatsAppNotifier
+builder.Services.AddHttpClient<WhatsAppNotifier>();
 
 
 var app = builder.Build();
@@ -29,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-
+    //esto es para abrir automaticamente el navegador en la pagina de swagger
     var url = "http://localhost:5054/swagger/index.html";
     try
     {
