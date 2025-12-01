@@ -5,7 +5,7 @@ namespace PooRepaso.Chamarket
         private readonly Dictionary<string, INotifier> registry;
         private readonly Dictionary<string, List<string>> eventToChannelModel;
 
-        public NotificationService(EmailNotifier email, PushNotifier push, WhattsapNotifier whattsap)
+        public NotificationService(EmailNotifier email, PushNotifier push, WhatsAppNotifier whattsap)
         {
             registry = new Dictionary<string, INotifier>();
             eventToChannelModel = new Dictionary<string, List<string>>();
