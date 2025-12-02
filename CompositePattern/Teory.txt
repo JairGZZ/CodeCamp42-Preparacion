@@ -1,0 +1,54 @@
+El patrón Composite es un patrón de diseño estructural que 
+permite tratar objetos individuales y grupos de objetos de la misma manera. 
+Su objetivo principal es representar jerarquías de tipo árbol (por ejemplo: menús, carpetas, interfaces gráficas, escenas de videojuegos, organización de empleados, etc.).
+
+
+
+Composite unifica el tratamiento de dos tipos de objetos:
+
+Component (Componente):
+Define las operaciones comunes que pueden usar tanto los objetos simples como los compuestos.
+
+Leaf (Hoja):
+Es un objeto simple que no tiene hijos.
+Hace el trabajo real (por ejemplo, un archivo en un sistema de archivos).
+
+Composite (Compuesto):
+Contiene otros componentes (hojas o compuestos).
+Puede agregar, eliminar y obtener hijos.
+Reenvía operaciones a sus hijos.
+
+Gracias a esta estructura, el cliente no necesita saber si está trabajando con una hoja o con un compuesto.
+
+¿Por qué es útil?
+
+Permite construir estructuras recursivas fácilmente.
+
+Simplifica el código del cliente:
+“siempre llamo a operation(), no importa si es hoja o compuesto”.
+
+Facilita agregar nuevos tipos de componentes sin romper el código existente.
+
+Cuándo usar Composite
+
+Utilízalo cuando:
+
+Quieras representar objetos en estructura de árbol.
+
+El cliente deba operar igual sobre objetos simples o conjuntos.
+
+Prefieras que las operaciones sobre grupos se propaguen automáticamente a sus elementos.
+
+Ventajas
+
+Código del cliente más simple y uniforme.
+
+Soporta fácilmente estructuras complejas.
+
+Cumple con OCP: puedes añadir nuevos componentes sin tocar los existentes.
+
+Desventajas
+
+Puede hacer más difícil restringir qué objetos se pueden poner dentro de otros.
+
+La estructura puede ser demasiado flexible (riesgo de mal uso).
