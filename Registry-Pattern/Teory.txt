@@ -1,0 +1,81 @@
+El patrón Registry es un patrón de diseño que proporciona un almacenamiento global estructurado para objetos, instancias o servicios que deben ser accesibles desde diferentes partes de la aplicación. Funciona como una “agenda global” donde puedes registrar objetos bajo una clave y luego recuperarlos fácilmente.
+
+No es un patrón oficial de GoF, pero es muy usado en sistemas reales como contenedores de servicios, motores de plugins, factories y frameworks.
+
+ Idea principal
+
+El Registry mantiene un mapa clave–valor donde:
+
+Registras (guardar) objetos con una clave.
+
+Obtienes (recuperar) objetos desde cualquier parte del programa.
+
+Opcionalmente remueves o actualizas registros.
+
+Se suele implementar como:
+
+Una clase estática,
+
+O un singleton que guarda referencias,
+
+O parte de un contenedor de dependencias.
+
+¿Cuál es el problema que resuelve?
+
+Evita:
+
+Crear múltiples instancias innecesarias.
+
+Tener dependencias fuertes dispersas por el código.
+
+Pasar objetos por parámetros de manera excesiva.
+
+Y permite:
+
+Acceder fácilmente a servicios compartidos.
+
+Centralizar la configuración de objetos.
+
+Implementar plugins, módulos y estrategias extensibles.
+
+Cuándo usar el patrón Registry
+
+Úsalo cuando:
+
+Necesitas acceso global controlado a servicios u objetos.
+
+Quieres permitir que partes externas del sistema (plugins, módulos, estrategias) se registren dinámicamente.
+
+Quieres que el cliente busque una instancia conocida sin acoplarse directamente al tipo concreto.
+
+Ejemplos típicos:
+
+Registro de estrategias (como tu motor de notificaciones).
+
+Registro de formateadores, handlers, validadores.
+
+Registro de controladores para eventos.
+
+Registro de conexiones o adaptadores.
+
+Sistemas que permiten extensión sin modificar el código central.
+
+Ventajas
+
+Simplifica la obtención de servicios compartidos.
+
+Centraliza y organiza dependencias.
+
+Facilita la extensibilidad (plugins/eventos/notificaciones).
+
+Puede funcionar como precursor de un contenedor DI.
+
+Desventajas
+
+Puede parecer una “variable global elegante”.
+
+Si se abusa, puede aumentar el acoplamiento.
+
+Dificulta pruebas unitarias si no se gestiona bien.
+
+Puede esconder dependencias importantes.
