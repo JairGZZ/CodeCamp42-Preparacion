@@ -1,0 +1,13 @@
+Un web server es un software que:
+
+Escucha solicitudes (requests) de clientes (normalmente navegadores o apps).
+
+Procesa la solicitud (revisa ruta, método, headers, cuerpo, etc.).
+
+Genera una respuesta (response).
+
+La envía de vuelta al cliente a través del protocolo HTTP.
+
+En palabras simples:
+
+Un web server es un programa que está “siempre escuchando” en un puerto, esperando peticiones, y respondiendo con texto, HTML, JSON, imágenes, etc.
