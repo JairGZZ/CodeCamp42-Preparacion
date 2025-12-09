@@ -4,9 +4,10 @@ import { RenderedContentDTO } from 'src/DTOs/RenderedContentDTO';
 
 export class WhatsAppNotifier implements INotifier {
   channel: string = 'whatsapp';
-  async Send(renderedDTO: RenderedContentDTO): Promise<void> {
+  async Send(renderedDTO: RenderedContentDTO): Promise<boolean> {
     console.log('Sending WhatsApp message with subject:', renderedDTO.subject);
     console.log('WhatsApp message body:', renderedDTO.body);
     console.log('Message sent successfully via WhatsAppNotifier strategy.');
+    return true;
   }
 }
