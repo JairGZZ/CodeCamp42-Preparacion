@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import Airtable, { apiKey } from 'airtable';
+import Airtable from 'airtable';
 import { PersistNotificationDTO } from 'src/DTOs/PersistNotificationDTO';
 
 @Injectable()
@@ -17,13 +17,11 @@ export class NotificationRepository {
     Airtable.configure({
       apiKey,
     });
-
     this.base = Airtable.base(baseId);
   }
 
-  async create(fields: PersistNotificationDTO) {
-
-    const plain = { ...fields};
+  public async create(fields: PersistNotificationDTO) {
+    const plain = { ...fields };
     try {
       const record = await this.base(this.tableName).create(plain);
       return record;
@@ -31,5 +29,44 @@ export class NotificationRepository {
       console.error('Error creating notification record:', error);
       throw error;
     }
+  }
+
+  public async updateNotification(recordId: string, payload: any) {
+    const [updated] = await this.base('Notifications').update([
+      {
+        id: recordId,
+        fields: payload,
+      },
+    ]);
+  }
+
+  public async getAllNotifications() {
+    try {
+      await this.base(this.tableName)
+        .select({
+          maxRecords: 50,
+          view: 'Grid view',
+        })
+        .eachPage((records, fetchNextPage) => {
+          records.forEach((record) => {
+            console.log(record._rawJson.createdTime);
+          });
+
+          fetchNextPage();
+        });
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+      throw error;
+    }
+  }
+
+  public async getNotificationById(id: string) {
+    this.base('Notifications').find('recpsmkZp3JwqS5Ev', (err, record) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log('Retrieved', record!.id, record!.fields);
+    });
   }
 }
