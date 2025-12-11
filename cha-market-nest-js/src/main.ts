@@ -5,6 +5,7 @@ import { NotificationModule } from './modules/NotificationModule';
 async function bootstrap() {
   const app = await NestFactory.create(NotificationModule);
 
+
   const config = new DocumentBuilder()
     .setTitle('Mi API')
     .setDescription('Cha Market API description')

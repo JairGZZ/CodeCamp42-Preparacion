@@ -13,3 +13,4 @@ export abstract class INotifier {
     CustomerDTO: CustomerDTO,
   ): Promise<boolean>;
 }
+ 

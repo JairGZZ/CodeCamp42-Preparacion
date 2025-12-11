@@ -34,7 +34,9 @@ export class TemplateService {
   ): string {
     let message: string = '';
     if (templateKey === 'descuento') {
-      message = `Hola ${data['name']} , accediste a un descuento 
+
+      message = `      
+      Hola ${data['name']} , accediste a un descuento 
              del ${data['descuento']} 
              en productos de ${data['categoria']}
              Oferta valida hasta el ${data['fecha']}`;

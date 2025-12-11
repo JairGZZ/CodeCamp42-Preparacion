@@ -16,10 +16,10 @@ export class PersistNotificationDTO {
   }
 
   constructor(
-    eventId?: string,
-    channel?: string
+    eventId: string,
+    channel: string
   ) {
-    if (eventId) this['Event Id'] = eventId;
-    if (channel) this['Channel'] = channel;
+    this['Event Id'] = eventId;
+    this['Channel'] = channel;
   }
 }

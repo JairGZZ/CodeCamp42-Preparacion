@@ -6,6 +6,7 @@ import { NotificationRepository } from 'src/Repository/NotificationRepository';
 import { NotficationEngine } from 'src/services/NotificationEngine';
 import { TemplateService } from 'src/services/TemplateService';
 import { EmailNotifier } from 'src/strategies/EmailNotifier';
+import { PushNotifier } from 'src/strategies/PushNotifier';
 import { WhatsAppNotifier } from 'src/strategies/WhatsAppNotifier';
 import { NOTIFICATION_STRATEGIES } from 'src/tokens/notification.token';
 
@@ -15,11 +16,12 @@ import { NOTIFICATION_STRATEGIES } from 'src/tokens/notification.token';
     TemplateService,
     NotificationRepository,
     EmailNotifier,
+    PushNotifier,
     WhatsAppNotifier,
     {
       provide: NOTIFICATION_STRATEGIES,
       useFactory: (...strategies: INotifier[]) => strategies,
-      inject: [EmailNotifier, WhatsAppNotifier],
+      inject: [EmailNotifier, WhatsAppNotifier,PushNotifier],
     },
     NotficationEngine,
   ],

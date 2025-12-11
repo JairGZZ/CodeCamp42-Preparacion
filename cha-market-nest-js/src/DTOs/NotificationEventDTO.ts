@@ -1,10 +1,11 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 import { CustomerDTO } from './CustomerDTO';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class NotificationEventDTO {
   @ApiProperty()
-  public eventId: string = uuidv4();
+  public eventId: string = v4();
   @ApiProperty()
   public templateKey: string;
   @ApiProperty()
@@ -20,6 +21,7 @@ export class NotificationEventDTO {
     customerDTO: CustomerDTO,
     data: Record<string, string>,
   ) {
+    this.eventId = v4();
     this.templateKey = templateKey;
     this.channels = channels;
     this.customerDTO = customerDTO;

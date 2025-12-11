@@ -35,6 +35,9 @@ export class NotficationEngine {
       const result = await this.notificationRepository.create(persistDTO);
 
       const sendResult = await strategy.Send(renderedDTO, event.customerDTO);
+      if(sendResult === null || sendResult === undefined|| sendResult === false){
+        throw new HttpException(`Error sending notification via channel: ${channel}`, 500);
+      }
 
       await this.UpdateNotificationStatus(sendResult, result.id);
     }
