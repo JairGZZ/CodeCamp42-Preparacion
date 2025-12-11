@@ -1,11 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Post } from '@nestjs/common';
+import { get } from 'http';
 import { NotificationEventDTO } from 'src/DTOs/NotificationEventDTO';
 import { NotificationRepository } from 'src/Repository/NotificationRepository';
 import { NotficationEngine } from 'src/services/NotificationEngine';
 
 @Controller('/notifications')
 export class NotificationController {
-  constructor(private readonly notificationEngine: NotficationEngine,private readonly notificationRepostiory:NotificationRepository) {}
+  constructor(
+    private readonly notificationEngine: NotficationEngine,
+    private readonly notificationRepostiory: NotificationRepository,
+  ) {}
   @Post()
   async ProcessNotification(
     @Body() notificationEventDTO: NotificationEventDTO,
@@ -17,9 +21,12 @@ export class NotificationController {
   async getAllNotifications() {
     return this.notificationRepostiory.getAllNotifications();
   }
+  @Get('/test-error')
+  async testError() {
+    throw new HttpException("an unexpected error ocurred",500);
+  }
   @Get('/byid')
   async getNotificationById() {
     return this.notificationRepostiory.getNotificationById('recpsmkZp3JwqS5Ev');
   }
-  
 }
