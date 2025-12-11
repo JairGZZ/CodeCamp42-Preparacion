@@ -1,0 +1,33 @@
+body {
+    background: #0d1117 !important;
+}
+
+.swagger-ui {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+img,
+.opblock-section-header,
+.download-url-wrapper {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+input,
+textarea,
+select {
+    background: #161b22 !important;
+    color: #fff !important;
+    border-color: #30363d !important;
+}
+
+.topbar {
+    background: #161b22 !important;
+}
+
+.topbar-wrapper .link span {
+    color: #fff !important;
+}
+
+.swagger-ui .opblock {
+    background: #161b22 !important;
+}
