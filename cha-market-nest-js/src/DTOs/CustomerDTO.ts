@@ -1,9 +1,14 @@
-
 // este dto representa la informacion del usuario
 
-export class CustomerDTO{
-    public customerId?:string;
-    public email?:string;
-    public phoneNumber?:string;
-    public DeviceToken?:string;
+import { ApiProperty } from '@nestjs/swagger';
+
+export class CustomerDTO {
+  @ApiProperty()
+  public customerId?: string;
+  @ApiProperty()
+  public email?: string;
+  @ApiProperty()
+  public phoneNumber?: string;
+  @ApiProperty()
+  public DeviceToken?: string;
 }

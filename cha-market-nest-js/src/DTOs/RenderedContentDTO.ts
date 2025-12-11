@@ -5,4 +5,11 @@ export class RenderedContentDTO{
     public channel:string;
     public body:string;
     public subject?:string;
+
+    constructor(){
+        this.eventid = v4();
+        this.channel = '';
+        this.body= '';
+    }
+
 }
