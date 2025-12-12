@@ -81,7 +81,7 @@ Haz clic en **"Try it out"** y utiliza el siguiente JSON de ejemplo:
     "deviceToken": "d3v1c3-t0k3n-abc"
   },
   "data": {
-    "dscuento": "10%",
+    "descuento": "10%",
     "categoria": "aseo",
     "name": "jair",
     "fecha": "2025-12-07",
