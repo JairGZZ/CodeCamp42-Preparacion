@@ -5,7 +5,7 @@ import { PersistNotificationDTO } from 'src/DTOs/PersistNotificationDTO';
 @Injectable()
 export class NotificationRepository {
   private base: Airtable.Base;
-  private readonly tableName: string = 'Notifications';
+  private readonly tableName = process.env.AIRTABLE_TABLE_NAME || 'Notifications';
   constructor() {
     const apiKey = process.env.AIRTABLE_API_KEY;
     const baseId = process.env.AIRTABLE_BASE_ID;

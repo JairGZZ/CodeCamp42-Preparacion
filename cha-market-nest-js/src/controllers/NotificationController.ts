@@ -10,7 +10,7 @@ export class NotificationController {
     private readonly notificationEngine: NotficationEngine,
     private readonly notificationRepostiory: NotificationRepository,
   ) {}
-  @Post()
+  @Post("/processEvent")
   async ProcessNotification(
     @Body() notificationEventDTO: NotificationEventDTO,
   ): Promise<string> {
